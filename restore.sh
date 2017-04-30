@@ -24,5 +24,5 @@ echo -e "Restoring TB data"
 adb push backup/$thebackup/TitaniumBackup /sdcard/
 echo -e "Restoring phone recording data"
 adb push backup/$thebackup/voix /sdcard/
-echo -e "Restoring WhatsApp Media data"
-adb push backup/$thebackup/WhatsApp/Media /sdcard/WhatsApp/Media/
+# echo -e "Restoring WhatsApp Media data"
+# adb push backup/$thebackup/WhatsApp/Media /sdcard/WhatsApp/Media/
