@@ -1,26 +1,44 @@
 #! /bin/bash
-now=$(date)
-mkdir backups
-mkdir backups/TB
-# Copy camscanner scans
-adb pull /sdcard/CamScanner/ backups
-# Copy download folder
-adb pull /sdcard/Download/ backups
-# Copy audiobook reader data
-adb pull /sdcard/ListenAudiobookPlayer/ backups
+now=$(date +%s)
+backuppath=backup/$now
+mkdir -p $backuppath/TB
+
 # Copy relevant Titanium Backup files
-adb pull /sdcard/TitaniumBackup/co.touchlab.android.onesecondeveryday-* backups/$now/TB
-adb pull /sdcard/TitaniumBackup/com.android.calllogbackup* backups/$now/TB
-adb pull /sdcard/TitaniumBackup/com.google.android.apps.authenticator2* backups/$now/TB
-adb pull /sdcard/TitaniumBackup/com.mycelium.wallet* backups/$now/TB
-adb pull /sdcard/TitaniumBackup/com.oneplus.wifiapsettings* backups/$now/TB
-adb pull /sdcard/TitaniumBackup/com.skvalex.callrecorder* backups/$now/TB
-adb pull /sdcard/TitaniumBackup/com.vito.lux* backups/$now/TB
-adb pull /sdcard/TitaniumBackup/com.whatsapp* backups/$now/TB
-adb pull /sdcard/TitaniumBackup/de.blinkt.openvpn* backups/$now/TB
-adb pull /sdcard/TitaniumBackup/org.adaway* backups/$now/TB
-adb pull /sdcard/TitaniumBackup/org.exobel.routerkeygen* backups/$now/TB
+# The adb shell command generates a list of files based on the wildcard, tr trims annoying break data, xargs calls a adb pull for every file
+# See http://stackoverflow.com/questions/11074671/adb-pull-multiple-files
+echo "Backing up TB backups"
+adb shell ls /sdcard/TitaniumBackup/co.touchlab.android.onesecondeveryday-* | tr '\r' ' ' | xargs -I % -n1 adb pull % $backuppath/TB
+adb shell ls /sdcard/TitaniumBackup/com.android.calllogbackup* | tr '\r' ' ' | xargs -I % -n1 adb pull % $backuppath/TB
+adb shell ls /sdcard/TitaniumBackup/com.google.android.apps.authenticator2* | tr '\r' ' ' | xargs -I % -n1 adb pull % $backuppath/TB
+adb shell ls /sdcard/TitaniumBackup/com.mycelium.wallet* | tr '\r' ' ' | xargs -I % -n1 adb pull % $backuppath/TB
+adb shell ls /sdcard/TitaniumBackup/com.oneplus.wifiapsettings* | tr '\r' ' ' | xargs -I % -n1 adb pull % $backuppath/TB
+adb shell ls /sdcard/TitaniumBackup/com.skvalex.callrecorder* | tr '\r' ' ' | xargs -I % -n1 adb pull % $backuppath/TB
+adb shell ls /sdcard/TitaniumBackup/com.vito.lux* | tr '\r' ' ' | xargs -I % -n1 adb pull % $backuppath/TB
+adb shell ls /sdcard/TitaniumBackup/com.whatsapp* | tr '\r' ' ' | xargs -I % -n1 adb pull % $backuppath/TB
+adb shell ls /sdcard/TitaniumBackup/de.blinkt.openvpn* | tr '\r' ' ' | xargs -I % -n1 adb pull % $backuppath/TB
+adb shell ls /sdcard/TitaniumBackup/org.adaway* | tr '\r' ' ' | xargs -I % -n1 adb pull % $backuppath/TB
+adb shell ls /sdcard/TitaniumBackup/org.exobel.routerkeygen* | tr '\r' ' ' | xargs -I % -n1 adb pull % $backuppath/TB
+
+# Copy camscanner scans
+echo "Backing up CamScanner data"
+adb pull /sdcard/CamScanner/ $backuppath
+
+# Copy download folder
+echo "Backing up Downloads folder"
+adb pull /sdcard/Download/ $backuppath
+
+# Move gifs int o a gif folder
+echo "Structuring Gifs, with a hard G"
+mkdir -p $backuppath/Download/gifs
+mv $backuppath/Dowlnoad/*.gif $backuppath/Download/gifs/
+
+# Copy audiobook reader data
+echo "Backing up Audiobook Player data"
+adb pull /sdcard/ListenAudiobookPlayer/ $backuppath
+
 # Copy whatsapp data
-adb pull /sdcard/WhatsApp/ backups
+echo "Backing up whatsapp chat and media data"
+adb pull /sdcard/WhatsApp/ $backuppath
 # Copy phone recording data
-adb pull /sdcard/voix/ backups
+echo "Backing up recorded phone calls"
+adb pull /sdcard/voix/ $backuppath
