@@ -6,7 +6,7 @@ mkdir -p $backuppath/TitaniumBackup
 # Copy relevant Titanium Backup files
 # The adb shell command generates a list of files based on the wildcard, tr trims annoying break data, xargs calls a adb pull for every file
 # See http://stackoverflow.com/questions/11074671/adb-pull-multiple-files
-echo "Backing up TB backups"
+echo -e "\nBacking up TB backups"
 # Why? Has unrecoverable data
 adb shell ls /sdcard/TitaniumBackup/co.touchlab.android.onesecondeveryday* | tr '\r' ' ' | xargs -I % -n1 adb pull % $backuppath/TitaniumBackup
 # Why? Has unrecoverable data
@@ -31,25 +31,25 @@ adb shell ls /sdcard/TitaniumBackup/org.adaway* | tr '\r' ' ' | xargs -I % -n1 a
 adb shell ls /sdcard/TitaniumBackup/org.exobel.routerkeygen* | tr '\r' ' ' | xargs -I % -n1 adb pull % $backuppath/TitaniumBackup
 
 # Copy camscanner scans
-echo "Backing up CamScanner data"
+echo -e "\nBacking up CamScanner data"
 adb pull /sdcard/CamScanner/ $backuppath
 
 # Copy download folder
-echo "Backing up Downloads folder"
+echo -e "\nBacking up Downloads folder"
 adb pull /sdcard/Download/ $backuppath
 
 # Move gifs int o a gif folder
-echo "Structuring Gifs, with a hard G"
+echo -e "Structuring Gifs, with a hard G"
 mkdir -p $backuppath/Download/gifs
-mv $backuppath/Dowlnoad/*.gif $backuppath/Download/gifs/
+mv $backuppath/Download/*.gif $backuppath/Download/gifs/
 
 # Copy audiobook reader data
-echo "Backing up Audiobook Player data"
+echo -e "\nBacking up Audiobook Player data"
 adb pull /sdcard/ListenAudiobookPlayer/ $backuppath
 
 # Copy whatsapp data
-echo "Backing up whatsapp chat and media data"
+echo -e "\nBacking up whatsapp chat and media data"
 adb pull /sdcard/WhatsApp/ $backuppath
 # Copy phone recording data
-echo "Backing up recorded phone calls"
+echo -e "\nBacking up recorded phone calls"
 adb pull /sdcard/voix/ $backuppath
