@@ -6,7 +6,7 @@ mkdir -p $backuppath/TitaniumBackup
 # Copy relevant Titanium Backup files
 # The adb shell command generates a list of files based on the wildcard, tr trims annoying break data, xargs calls a adb pull for every file
 # See http://stackoverflow.com/questions/11074671/adb-pull-multiple-files
-echo -e "\nBacking up TB backups"
+echo -e "\nBacking up TB app backups"
 # Why? Has unrecoverable data
 adb shell ls /sdcard/TitaniumBackup/co.touchlab.android.onesecondeveryday* | tr '\r' ' ' | xargs -I % -n1 adb pull % $backuppath/TitaniumBackup
 # Why? Has unrecoverable data
@@ -29,6 +29,11 @@ adb shell ls /sdcard/TitaniumBackup/de.blinkt.openvpn* | tr '\r' ' ' | xargs -I 
 adb shell ls /sdcard/TitaniumBackup/org.adaway* | tr '\r' ' ' | xargs -I % -n1 adb pull % $backuppath/TitaniumBackup
 # Why? Not available in app store
 adb shell ls /sdcard/TitaniumBackup/org.exobel.routerkeygen* | tr '\r' ' ' | xargs -I % -n1 adb pull % $backuppath/TitaniumBackup
+
+# Back up system data
+echo -e "\nBacking up TB system backups"
+# Why? Has unrecoverable data
+adb shell ls /sdcard/TitaniumBackup/com.keramidas.virtual* | tr '\r' ' ' | xargs -I % -n1 adb pull % $backuppath/TitaniumBackup
 
 # Copy camscanner scans
 echo -e "\nBacking up CamScanner data"
