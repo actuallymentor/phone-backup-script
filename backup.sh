@@ -29,6 +29,12 @@ adb shell ls /sdcard/TitaniumBackup/de.blinkt.openvpn* | tr '\r' ' ' | xargs -I 
 adb shell ls /sdcard/TitaniumBackup/org.adaway* | tr '\r' ' ' | xargs -I % -n1 adb pull % $backuppath/TitaniumBackup
 # Why? Not available in app store
 adb shell ls /sdcard/TitaniumBackup/org.exobel.routerkeygen* | tr '\r' ' ' | xargs -I % -n1 adb pull % $backuppath/TitaniumBackup
+# Why? Has unrecoverable data
+adb shell ls /sdcard/TitaniumBackup/com.studymode.cram* | tr '\r' ' ' | xargs -I % -n1 adb pull % $backuppath/TitaniumBackup
+# Why? Has unrecoverable data
+adb shell ls /sdcard/TitaniumBackup/com.bambuna.podcastaddict* | tr '\r' ' ' | xargs -I % -n1 adb pull % $backuppath/TitaniumBackup
+# Why? Has unrecoverable data
+adb shell ls /sdcard/TitaniumBackup/com.isaiasmatewos.texpand* | tr '\r' ' ' | xargs -I % -n1 adb pull % $backuppath/TitaniumBackup
 
 # Back up system data
 echo -e "\nBacking up TB system backups"
