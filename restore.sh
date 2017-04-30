@@ -14,4 +14,10 @@ echo -e "\n"
 read -p "Press any key to start data restoration..."
 
 # Push files to device
+adb push backup/$thebackup/CamScanner /sdcard/
+adb push backup/$thebackup/Download /sdcard/
+adb push backup/$thebackup/ListenAudiobookPlayer /sdcard/
+adb push backup/$thebackup/TitaniumBackup /sdcard/
+adb push backup/$thebackup/voix /sdcard/
+adb push backup/$thebackup/WhatsApp/Media /sdcard/WhatsApp/Media
 adb push backup/$thebackup/* /sdcard/
